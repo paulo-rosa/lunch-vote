@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunchVote.API", "LunchVote.API\LunchVote.API.csproj", "{0BEA2B30-D39E-4719-8511-CA1495935148}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunchVote.Tests", "LunchVote.Tests\LunchVote.Tests.csproj", "{8CDEF79D-F3D4-421C-8A8A-9DE128DE9C37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunchVote.LIB", "LunchVote.LIB\LunchVote.LIB.csproj", "{178FCC18-44EB-4D40-BDCF-25F904088D71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{0BEA2B30-D39E-4719-8511-CA1495935148}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BEA2B30-D39E-4719-8511-CA1495935148}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BEA2B30-D39E-4719-8511-CA1495935148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDEF79D-F3D4-421C-8A8A-9DE128DE9C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDEF79D-F3D4-421C-8A8A-9DE128DE9C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDEF79D-F3D4-421C-8A8A-9DE128DE9C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDEF79D-F3D4-421C-8A8A-9DE128DE9C37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{178FCC18-44EB-4D40-BDCF-25F904088D71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{178FCC18-44EB-4D40-BDCF-25F904088D71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{178FCC18-44EB-4D40-BDCF-25F904088D71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{178FCC18-44EB-4D40-BDCF-25F904088D71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
