@@ -21,5 +21,12 @@ namespace LunchVote.LIB.Entities
 
         [ForeignKey("RestaurantId")]
         public Restaurant Restaurant { get; set; }
+
+        public Guid ElectionId { get; set; }
+
+        [ForeignKey("ElectionId")]
+        public Election Election { get; set; }
+
+        public DateTime VoteDate { get; set; }
     }
 }

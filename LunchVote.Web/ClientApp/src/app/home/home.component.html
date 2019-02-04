@@ -1,0 +1,10 @@
+<h2>Quem é você?</h2>
+<br/>
+<form [formGroup]="professionalForm" (ngSubmit)="onSubmit(selectedProfId)">
+  <select formControlName="professionalControl" [(ngModel)]="selectedProfId">
+    <option [value]="professional.id" *ngFor="let professional of professionalList">{{professional.name}}</option>
+  </select>
+  <br />
+  <br />
+  <input type="submit">
+</form>

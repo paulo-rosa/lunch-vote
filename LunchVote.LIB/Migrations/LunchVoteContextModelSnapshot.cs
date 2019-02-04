@@ -19,6 +19,18 @@ namespace LunchVote.LIB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("LunchVote.LIB.Entities.Election", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ElectionDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Elections");
+                });
+
             modelBuilder.Entity("LunchVote.LIB.Entities.Professional", b =>
                 {
                     b.Property<Guid>("Id")
@@ -48,11 +60,17 @@ namespace LunchVote.LIB.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("ElectionId");
+
                     b.Property<Guid>("ProfessionalId");
 
                     b.Property<Guid>("RestaurantId");
 
+                    b.Property<DateTime>("VoteDate");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ElectionId");
 
                     b.HasIndex("ProfessionalId");
 
@@ -63,6 +81,11 @@ namespace LunchVote.LIB.Migrations
 
             modelBuilder.Entity("LunchVote.LIB.Entities.Vote", b =>
                 {
+                    b.HasOne("LunchVote.LIB.Entities.Election", "Election")
+                        .WithMany("Votes")
+                        .HasForeignKey("ElectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("LunchVote.LIB.Entities.Professional", "Professional")
                         .WithMany()
                         .HasForeignKey("ProfessionalId")

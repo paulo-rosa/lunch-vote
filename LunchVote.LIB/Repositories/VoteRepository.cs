@@ -17,6 +17,17 @@ namespace LunchVote.LIB.Repositories
             _context = context;
         }
 
+        public async Task<List<Vote>> GetVotesAsync(Guid professionalId)
+        {
+            return await _context.Votes.Where(v => v.ProfessionalId == professionalId).ToListAsync();
+        }
+
+        public async Task<Vote> GetTodaysUserVote(Guid professionalId)
+        {
+            return await _context.Votes.Where(v => v.ProfessionalId == professionalId && 
+                                                    v.VoteDate.Day >= DateTime.Now.Day).FirstOrDefaultAsync();
+        }
+
         public async Task<Vote> PostVoteAsync(Vote vote)
         {
             await _context.AddAsync(vote);
@@ -30,6 +41,14 @@ namespace LunchVote.LIB.Repositories
                 .FirstOrDefaultAsync();
 
             return vote;
+        }
+
+        public async Task<bool> RestaurantAlreadySelected(Guid restaurantId)
+        {
+            var restList = await _context.Elections.Where(r => r.ElectionDate.Day > DateTime.Now.Day)
+                .ToListAsync();
+
+            return restList.Where(r => r.Id == restaurantId).Count() > 0;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace LunchVote.LIB.Services
     public interface IVoteService
     {
         Task<Vote> PostVoteAsync(Vote vote);
+        Task<List<Vote>> GetVotesAsync(Guid professionalId);
     }
 }

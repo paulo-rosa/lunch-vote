@@ -1,0 +1,10 @@
+<h2>Selecione o restaurante!</h2>
+<br />
+<form [formGroup]="voteForm" (ngSubmit)="onSubmit(selectedRestaurantId)">
+  <select formControlName="restaurantControl" [(ngModel)]="selectedRestaurantId">
+    <option [value]="restaurant.id" *ngFor="let restaurant of restaurantList">{{restaurant.name}}</option>
+  </select>
+  <br />
+  <br />
+  <input type="submit">
+</form>

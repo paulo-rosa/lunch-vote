@@ -28,6 +28,7 @@ namespace LunchVote.API
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddCors();
 
             // register the DbContext on the container, getting the connection string from
             // appSettings (note: use this during development; in a production environment,
@@ -36,7 +37,11 @@ namespace LunchVote.API
             services.AddDbContext<LunchVoteContext>(o => o.UseSqlServer(connectionString));
 
             services.AddScoped<IVoteRepository, VoteRepository>();
+            services.AddScoped<IProfessionalRepository, ProfessionalRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IVoteService, VoteService>();
+            services.AddScoped<IProfessionalService, ProfessionalService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
 
             // Add Database Initializer
             services.AddTransient<IDBInitializer, DBInitializer>();
@@ -95,6 +100,10 @@ namespace LunchVote.API
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "LunchVote API V1");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseCors(
+                options => options.WithOrigins("https://localhost:44313").AllowAnyMethod()
+            );
 
             app.UseMvc();
         }

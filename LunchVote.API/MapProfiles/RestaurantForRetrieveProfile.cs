@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace LunchVote.API.MapProfiles
 {
-    public class VoteForPostProfile: Profile
+    public class RestaurantForRetrieveProfile : Profile
     {
-        public VoteForPostProfile()
+        public RestaurantForRetrieveProfile()
         {
-            CreateMap<VoteForPostDto, Vote>();
+            CreateMap<Restaurant, RestaurantForRetrieveProfile>();
         }
     }
 }

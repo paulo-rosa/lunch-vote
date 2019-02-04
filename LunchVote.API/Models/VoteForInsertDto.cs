@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace LunchVote.API.Models
 {
-    public class VoteForPostDto
+    public class VoteForInsertDto
     {
-        public Guid UserId { get; set; }
+        public Guid ProfessionalId { get; set; }
         public Guid RestaurantId { get; set; }
     }
 }

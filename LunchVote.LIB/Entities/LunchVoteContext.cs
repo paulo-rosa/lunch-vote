@@ -29,5 +29,6 @@ namespace LunchVote.LIB.Entities
         public DbSet<Professional> Professionals { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
         public DbSet<Vote> Votes { get; set; }
+        public DbSet<Election> Elections { get; set; }
     }
 }

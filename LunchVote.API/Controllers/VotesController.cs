@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -25,33 +26,32 @@ namespace LunchVote.API.Controllers
             _voteService = voteService;
         }
 
-        // GET api/values
-        [HttpGet]
-        [SwaggerOperation(Tags = new[] { "Votes" })]
-        [SwaggerResponse(200, Type = typeof(IEnumerable<string>))]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        [SwaggerOperation(Tags = new[] { "Votes" })]
-        [SwaggerResponse(200, Type = typeof(string))]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
+        /// <summary>
+        /// POST votes
+        /// </summary>
+        /// <param name="voteForPost"></param>
+        /// <returns></returns>
         [HttpPost]
         [SwaggerOperation(Tags = new[] { "Votes" })]
         [SwaggerResponse(200, Type = typeof(VoteForRetrieveDto))]
-        public async Task<ActionResult<VoteForRetrieveDto>> Post([FromBody] VoteForPostDto voteForPost)
+        public async Task<ActionResult<VoteForRetrieveDto>> Post([FromBody] VoteForInsertDto voteForPost)
         {
-            Vote vote = _mapper.Map<Vote>(voteForPost);
+            try
+            {
+                Vote vote = _mapper.Map<Vote>(voteForPost);
+                vote.VoteDate = DateTime.Now;
 
-            return _mapper.Map<VoteForRetrieveDto> (await _voteService.PostVoteAsync(vote));            
+                var ret = _mapper.Map<VoteForRetrieveDto>(await _voteService.PostVoteAsync(vote));
+                return ret;
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
