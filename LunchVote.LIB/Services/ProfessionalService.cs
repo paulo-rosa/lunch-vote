@@ -16,7 +16,7 @@ namespace LunchVote.LIB.Services
             _professionalRepository = professionalRepository;
         }
 
-        public async Task<List<Professional>> GetProfessionals()
+        public async Task<List<Professional>> GetProfessionalsAsync()
         {
             return await  _professionalRepository.GetProfessionalsAsync();
         }

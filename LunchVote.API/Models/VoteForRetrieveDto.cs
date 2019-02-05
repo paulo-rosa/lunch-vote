@@ -7,7 +7,9 @@ namespace LunchVote.API.Models
 {
     public class VoteForRetrieveDto
     {
+        public Guid ProfessionalId { get; set; }
         public string ProfessionalName { get; set; }
+        public Guid RestaurantId { get; set; }
         public string RestaurantName { get; set; }
     }
 }

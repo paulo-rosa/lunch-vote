@@ -53,5 +53,29 @@ namespace LunchVote.API.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        /// <summary>
+        /// Get current election
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("elections/current")]
+        [SwaggerOperation(Tags = new[] { "Votes" })]
+        [SwaggerResponse(200, Type = typeof(List<ElectionForRetrieveDto>))]
+        public async Task<ActionResult<ElectionForRetrieveDto>> GetCurrentElection()
+        {
+            try
+            {
+                var ret = _mapper.Map<ElectionForRetrieveDto>(await _voteService.GetTodaysElectionAsync());
+                return ret;
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

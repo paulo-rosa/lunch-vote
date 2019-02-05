@@ -10,7 +10,10 @@ namespace LunchVote.LIB.Repositories
     {
         Task<Vote> PostVoteAsync(Vote vote);
         Task<List<Vote>> GetVotesAsync(Guid professionalId);
-        Task<Vote> GetTodaysUserVote(Guid professionalId);
+        Task<Vote> GetTodaysUserVoteAsync(Guid professionalId);
         Task<bool> RestaurantAlreadySelected(Guid restaurantId);
+        Task<Election> GetTodaysElectionAsync();
+        Task<List<Election>> GetWeekElectionsAsync();
+        void FinishElection(Guid electionId, Guid winnerRestaurantId);
     }
 }

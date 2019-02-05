@@ -12,7 +12,7 @@ using Xunit;
 
 namespace LunchVote.Tests
 {
-    public class VoteForRestaurantUnitTest
+    public class VoteServiceUnitTest
     {
         [Fact]
         public async void Add_VoteForRestaurant_ReturnsVoteConfirmation()
@@ -23,7 +23,9 @@ namespace LunchVote.Tests
             IVoteService voteService = new VoteService(mock.Object);
 
             mock.Setup(p => p.PostVoteAsync(vote)).ReturnsAsync(vote);
-            
+
+            mock.Setup(p => p.GetTodaysElectionAsync()).ReturnsAsync(VoteMock.Election);
+
             var result = await voteService.PostVoteAsync(vote);
             
             //User can vote
@@ -39,9 +41,44 @@ namespace LunchVote.Tests
             var vote = VoteMock.VoteList.First();
             var mock = new Mock<IVoteRepository>();
             IVoteService voteService = new VoteService(mock.Object);
+            
             mock.Setup(p => p.PostVoteAsync(vote)).ReturnsAsync(() => throw new ValidationException("Você já votou no dia de hoje. Por favor, volte amanhã."));            
             
             await Assert.ThrowsAsync<ValidationException>(() => voteService.PostVoteAsync(vote));
+        }
+
+        [Fact]
+        public async void Get_TodaysElection_ReturnsElection()
+        {
+            var vote = VoteMock.VoteList.First();
+            var mock = new Mock<IVoteRepository>();
+            IVoteService voteService = new VoteService(mock.Object);
+
+            mock.Setup(p => p.GetTodaysElectionAsync()).ReturnsAsync(VoteMock.Election);
+
+            var response = await voteService.GetTodaysElectionAsync();
+
+            Assert.NotNull(response);
+
+            //
+            Assert.Equal(DateTime.Now.Date, response.ElectionDate.Date);
+        }
+
+        [Fact]
+        public async void Get_TodaysElection_ElectionIstoday()
+        {
+            var vote = VoteMock.VoteList.First();
+            var mock = new Mock<IVoteRepository>();
+            IVoteService voteService = new VoteService(mock.Object);
+
+            mock.Setup(p => p.GetTodaysElectionAsync()).ReturnsAsync(VoteMock.Election);
+
+            var response = await voteService.GetTodaysElectionAsync();
+
+            Assert.NotNull(response);
+
+            //
+            Assert.Equal(DateTime.Now.Date, response.ElectionDate.Date);
         }
     }
 }

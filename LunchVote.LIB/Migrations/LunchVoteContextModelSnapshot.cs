@@ -26,6 +26,10 @@ namespace LunchVote.LIB.Migrations
 
                     b.Property<DateTime>("ElectionDate");
 
+                    b.Property<int>("Status");
+
+                    b.Property<Guid>("WinnerRestaurantId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Elections");

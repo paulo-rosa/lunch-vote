@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LunchVote.LIB.Migrations
 {
     [DbContext(typeof(LunchVoteContext))]
-    [Migration("20190201223841_Initial")]
+    [Migration("20190204200103_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,22 @@ namespace LunchVote.LIB.Migrations
                 .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("LunchVote.LIB.Entities.Election", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ElectionDate");
+
+                    b.Property<int>("Status");
+
+                    b.Property<Guid>("WinnerRestaurantId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Elections");
+                });
 
             modelBuilder.Entity("LunchVote.LIB.Entities.Professional", b =>
                 {
@@ -50,11 +66,17 @@ namespace LunchVote.LIB.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("ElectionId");
+
                     b.Property<Guid>("ProfessionalId");
 
                     b.Property<Guid>("RestaurantId");
 
+                    b.Property<DateTime>("VoteDate");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ElectionId");
 
                     b.HasIndex("ProfessionalId");
 
@@ -65,6 +87,11 @@ namespace LunchVote.LIB.Migrations
 
             modelBuilder.Entity("LunchVote.LIB.Entities.Vote", b =>
                 {
+                    b.HasOne("LunchVote.LIB.Entities.Election", "Election")
+                        .WithMany("Votes")
+                        .HasForeignKey("ElectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("LunchVote.LIB.Entities.Professional", "Professional")
                         .WithMany()
                         .HasForeignKey("ProfessionalId")

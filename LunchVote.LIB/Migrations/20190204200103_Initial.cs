@@ -8,6 +8,20 @@ namespace LunchVote.LIB.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Elections",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ElectionDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    WinnerRestaurantId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Elections", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Professionals",
                 columns: table => new
                 {
@@ -37,11 +51,19 @@ namespace LunchVote.LIB.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ProfessionalId = table.Column<Guid>(nullable: false),
-                    RestaurantId = table.Column<Guid>(nullable: false)
+                    RestaurantId = table.Column<Guid>(nullable: false),
+                    ElectionId = table.Column<Guid>(nullable: false),
+                    VoteDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Votes_Elections_ElectionId",
+                        column: x => x.ElectionId,
+                        principalTable: "Elections",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Votes_Professionals_ProfessionalId",
                         column: x => x.ProfessionalId,
@@ -55,6 +77,11 @@ namespace LunchVote.LIB.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Votes_ElectionId",
+                table: "Votes",
+                column: "ElectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_ProfessionalId",
@@ -71,6 +98,9 @@ namespace LunchVote.LIB.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Votes");
+
+            migrationBuilder.DropTable(
+                name: "Elections");
 
             migrationBuilder.DropTable(
                 name: "Professionals");

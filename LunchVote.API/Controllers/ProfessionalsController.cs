@@ -35,7 +35,7 @@ namespace LunchVote.API.Controllers
         [SwaggerResponse(200, Type = typeof(List<ProfessionalForRetrieveDto>))]
         public async Task<ActionResult<List<ProfessionalForRetrieveDto>>> Get()
         {
-            var professionals = await _professionalService.GetProfessionals();
+            var professionals = await _professionalService.GetProfessionalsAsync();
 
             return Mapper.Map<List<ProfessionalForRetrieveDto>>(professionals);
         }

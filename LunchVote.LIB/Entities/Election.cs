@@ -20,10 +20,7 @@ namespace LunchVote.LIB.Entities
 
         public EnumElectionStatus Status { get; set; }
 
-        public Guid WinnerId { get; set; }
-
-        [ForeignKey("WinnerId")]
-        public Restaurant Winner { get; set; }
+        public Guid WinnerRestaurantId { get; set; }
     }
 
     public enum EnumElectionStatus

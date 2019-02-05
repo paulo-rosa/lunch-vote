@@ -27,14 +27,20 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\home\home.service.ts" />
     <None Remove="ClientApp\src\app\home\models\Professional.ts" />
+    <None Remove="ClientApp\src\app\home\models\VoteModel.ts" />
     <None Remove="ClientApp\src\app\vote\models\RestaurantModel.ts" />
+    <None Remove="ClientApp\src\app\vote\models\VotePostModel.ts" />
+    <None Remove="ClientApp\src\app\vote\models\VoteResultModel.ts" />
     <None Remove="ClientApp\src\app\vote\vote.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\home\home.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\home\models\Professional.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\home\models\VoteModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\vote\models\RestaurantModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\vote\models\VotePostModel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\vote\models\VoteResultModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\vote\vote.service.ts" />
   </ItemGroup>
 

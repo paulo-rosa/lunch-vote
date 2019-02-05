@@ -14,7 +14,9 @@ namespace LunchVote.API.MapProfiles
         {
             CreateMap<Vote, VoteForRetrieveDto>()
                 .ForMember(dest => dest.RestaurantName, opt => opt.MapFrom(src => src.Restaurant.Name))
-                .ForMember(dest => dest.ProfessionalName, opt => opt.MapFrom(src => src.Professional.Name));
+                .ForMember(dest => dest.RestaurantId, opt => opt.MapFrom(src => src.Restaurant.Id))
+                .ForMember(dest => dest.ProfessionalName, opt => opt.MapFrom(src => src.Professional.Name))
+                .ForMember(dest => dest.ProfessionalId, opt => opt.MapFrom(src => src.Professional.Id));
         }
     }
 }

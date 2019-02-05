@@ -8,6 +8,6 @@ namespace LunchVote.LIB.Services
 {
     public interface IProfessionalService
     {
-        Task<List<Professional>> GetProfessionals();
+        Task<List<Professional>> GetProfessionalsAsync();
     }
 }

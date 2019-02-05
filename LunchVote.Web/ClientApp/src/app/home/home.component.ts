@@ -4,6 +4,7 @@ import { HomeService } from './home.service';
 import { ProfessionalModel } from './models/Professional';
 import { debug } from 'util';
 import { RouterLink, Router } from '@angular/router';
+import { ElectionModel } from './models/ElectionModel';
 
 @Component({
   selector: 'app-home',
@@ -15,11 +16,19 @@ export class HomeComponent implements OnInit {
 
   professionalList: Array<ProfessionalModel>;
 
+  currElection: ElectionModel;
+
   selectedProfId: string;
 
   constructor(private fb: FormBuilder, private homeService: HomeService, private router: Router) { }
 
   ngOnInit() {
+
+    this.homeService.getElection()
+      .subscribe(res => {
+        this.currElection = res;
+        console.log(this.currElection);
+      });
 
     this.homeService.getProfessionals()
       .subscribe(res => {
@@ -27,7 +36,7 @@ export class HomeComponent implements OnInit {
       });
 
     this.professionalForm = this.fb.group({
-      professionalControl: ""
+      professionalControl: ''
     });
   }
 
@@ -36,9 +45,8 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(id: string) {
-    debugger;
     if (!id) {
-      alert("Select a professional!");
+      alert('Select a professional!');
     }
     else {
       this.router.navigate(['/vote', id]);

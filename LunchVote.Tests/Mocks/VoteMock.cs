@@ -90,7 +90,30 @@ namespace LunchVote.Tests.Mocks
                         ProfessionalId = ProfessionalList.First().Id,
                         RestaurantId = RestaurantList.First().Id,
                         VoteDate = DateTime.Now
+                    },
+                    new Vote
+                    {
+                        Id = Guid.NewGuid(),
+                        ProfessionalId = ProfessionalList.Last().Id,
+                        RestaurantId = RestaurantList.First().Id,
+                        VoteDate = DateTime.Now
                     }
+                };
+            }
+        }
+
+        public static Election Election
+        {
+            get
+            {
+                return new Election()
+                {
+                    Id = Guid.NewGuid(),
+                    ElectionDate = DateTime.Now,
+                    Status = EnumElectionStatus.closed,
+                    Votes = VoteList,
+                    WinnerRestaurantId = VoteList.GroupBy(v => v.RestaurantId).Select(r => new { Value = r.Key, Count = r.Count() })
+                        .OrderByDescending(o => o.Count).FirstOrDefault().Value
                 };
             }
         }

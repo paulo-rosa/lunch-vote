@@ -1,8 +1,9 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { RestaurantModel } from './models/RestaurantModel';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RestaurantModel } from './models/RestaurantModel';
+import { VoteResultModel } from './models/VoteResultModel';
+import { VotePostModel } from './models/VotePostModel';
 
 @Injectable()
 export class VoteService {
@@ -17,8 +18,17 @@ export class VoteService {
     }));
   }
 
-  postVote(data) {
-    return this.http.post(this.postVoteUrl, data);
+  postVote(data: VotePostModel) {
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post(this.postVoteUrl, data, httpOptions).pipe(map(response => {
+      return response as VoteResultModel;
+    }));
   }
 
 }

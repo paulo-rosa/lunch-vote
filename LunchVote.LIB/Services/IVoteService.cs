@@ -10,5 +10,7 @@ namespace LunchVote.LIB.Services
     {
         Task<Vote> PostVoteAsync(Vote vote);
         Task<List<Vote>> GetVotesAsync(Guid professionalId);
+        Task<List<Election>> GetWeekElectionsAsync();
+        Task<Election> GetTodaysElectionAsync();
     }
 }

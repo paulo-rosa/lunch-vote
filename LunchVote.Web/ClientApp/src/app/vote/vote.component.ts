@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestaurantModel } from './models/RestaurantModel';
+import { VoteResultModel } from './models/VoteResultModel';
 import { VoteService } from './vote.service';
-import { Router, RouterLink, ActivatedRoute } from '@angular/router';
-import { switchMap, map } from 'rxjs/operators';
-import { debug } from 'util';
+import { VotePostModel } from './models/VotePostModel';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-vote',
@@ -14,14 +15,12 @@ import { debug } from 'util';
 export class VoteComponent implements OnInit {
 
   voteForm: FormGroup;
-
   restaurantList: Array<RestaurantModel>;
-
+  voteResult: VoteResultModel;
   selectedProfessionalId: string;
-
   selectedRestaurantId: string;
 
-  constructor(private fb: FormBuilder, private voteService: VoteService, private actRouter: ActivatedRoute) { }
+  constructor(private fb: FormBuilder, private voteService: VoteService, private actRouter: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
@@ -37,18 +36,26 @@ export class VoteComponent implements OnInit {
     });
   }
 
-
   onSubmit(id: string) {
-    debugger;
     if (!id) {
       alert("Select a professional!");
     }
     else {
-      debugger;
-      this.voteService.postVote({
-        "professionalId": this.selectedProfessionalId,
-        "restaurantId": this.selectedRestaurantId
-      });
+      const votePostModel = new VotePostModel();
+      votePostModel.professionalId = this.selectedProfessionalId;
+      votePostModel.restaurantId = this.selectedRestaurantId;
+
+      this.voteService.postVote(votePostModel)
+        .subscribe(
+          res => {
+            alert('Voto Registrado com Sucesso!');
+            this.router.navigate(['/']);
+          },
+          err => {
+            alert(err.error);
+            this.router.navigate(['/']);
+          }
+        );
     }
   }
 }

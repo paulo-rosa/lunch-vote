@@ -1,4 +1,4 @@
-﻿using LunchVote.LIB.Entities;
+﻿    using LunchVote.LIB.Entities;
 using LunchVote.LIB.Repositories;
 using System;
 using System.Collections.Generic;
@@ -25,13 +25,29 @@ namespace LunchVote.LIB.Services
 
         public async Task<Vote> PostVoteAsync(Vote vote)
         {
+            var todaysElection = await _voteRepository.GetTodaysElectionAsync();
+            if (todaysElection != null)
+            {
+                vote.ElectionId = todaysElection.Id;
+            }
+
             // Usuário não pode votar mais de uma vez no dia
-            var todayUserVote = await _voteRepository.GetTodaysUserVote(vote.ProfessionalId);            
+            var todayUserVote = await _voteRepository.GetTodaysUserVoteAsync(vote.ProfessionalId);            
             if (todayUserVote != null)
             {
                 throw new ValidationException("Você já votou no dia de hoje. Por favor, volte amanhã.");
             }
             return await _voteRepository.PostVoteAsync(vote);
+        }
+
+        public async Task<List<Election>> GetWeekElectionsAsync()
+        {
+            return await _voteRepository.GetWeekElectionsAsync();
+        }
+
+        public async Task<Election> GetTodaysElectionAsync()
+        {
+            return await _voteRepository.GetTodaysElectionAsync();
         }
     }
 }
