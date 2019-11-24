@@ -2,9 +2,9 @@
 WebAPI (.NET Core 2.2) + Angular 6 Application to voting for lunch location.
 
 ### Prerequisites (For Windows)
-ASP .NET Core 2.2
-Visual Studio 2017
-Node (https://nodejs.org/en/download/)
+- ASP .NET Core 2.2
+- Visual Studio 2017
+- Node (https://nodejs.org/en/download/)
 
 
 ### Running API
